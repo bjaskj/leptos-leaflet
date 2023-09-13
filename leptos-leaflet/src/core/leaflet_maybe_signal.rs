@@ -23,10 +23,12 @@ impl<T> Default for LeafletMaybeSignal<T>
     }
 }
 
-impl<T> SignalGet<Option<T>> for LeafletMaybeSignal<T>
+impl<T: Clone> SignalGet for LeafletMaybeSignal<T>
     where
         T: Clone + 'static,
 {
+    type Value = Option<T>;
+        
     fn get(&self) -> Option<T> {
         match self {
             LeafletMaybeSignal::Static(v) => v.get_value(),
@@ -42,10 +44,12 @@ impl<T> SignalGet<Option<T>> for LeafletMaybeSignal<T>
     }
 }
 
-impl<T> SignalWith<Option<T>> for LeafletMaybeSignal<T>
+impl<T: Clone> SignalWith for LeafletMaybeSignal<T>
     where
         T: Clone + 'static,
-{
+{    
+    type Value = Option<T>;
+
     fn with<O>(&self, f: impl FnOnce(&Option<T>) -> O) -> O {
         match self {
             LeafletMaybeSignal::Static(v) => f(&v.get_value()),
@@ -61,10 +65,12 @@ impl<T> SignalWith<Option<T>> for LeafletMaybeSignal<T>
     }
 }
 
-impl<T> SignalWithUntracked<Option<T>> for LeafletMaybeSignal<T>
+impl<T> SignalWithUntracked for LeafletMaybeSignal<T>
     where
         T: Clone + 'static,
 {
+    type Value = Option<T>;
+
     fn with_untracked<O>(&self, f: impl FnOnce(&Option<T>) -> O) -> O {
         match self {
             LeafletMaybeSignal::Static(v) => f(&v.get_value()),
@@ -80,10 +86,12 @@ impl<T> SignalWithUntracked<Option<T>> for LeafletMaybeSignal<T>
     }
 }
 
-impl<T> SignalGetUntracked<Option<T>> for LeafletMaybeSignal<T>
+impl<T> SignalGetUntracked for LeafletMaybeSignal<T>
     where
         T: Clone + 'static,
 {
+    type Value = Option<T>;
+
     fn get_untracked(&self) -> Option<T> {
         match self {
             LeafletMaybeSignal::Static(v) => v.get_value(),
