@@ -30,6 +30,7 @@ pub fn Marker(
     #[prop(into, optional)] auto_pan: LeafletMaybeSignal<bool>,
     #[prop(into, optional)] auto_pan_padding: LeafletMaybeSignal<(f64, f64)>,
     #[prop(into, optional)] auto_pan_speed: LeafletMaybeSignal<f64>,
+    #[prop(into, optional)] div_icon: LeafletMaybeSignal<leaflet::DivIcon>,
     #[prop(into, optional)] icon_class: LeafletMaybeSignal<String>,
     #[prop(into, optional)] icon_url: LeafletMaybeSignal<String>,
     #[prop(into, optional)] icon_size: LeafletMaybeSignal<(f64, f64)>,
@@ -90,9 +91,13 @@ pub fn Marker(
                 }
                 let icon = leaflet::DivIcon::new(&icon_options);
                 options.icon(icon.into());
+            } else if let Some(div_icon) = div_icon.get_untracked() {
+                options.icon(div_icon.into());
             }
+
             let marker =
                 leaflet::Marker::newWithOptions(&position.get_untracked().into(), &options);
+
 
             mouse_events.setup(&marker);
             move_events.setup(&marker);

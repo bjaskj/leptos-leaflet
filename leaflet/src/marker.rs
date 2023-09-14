@@ -3,7 +3,7 @@ use crate::evented::{
 };
 use crate::{
     object_constructor, object_property_set, Evented, Handler, Icon, LatLng, Layer, LayerEvents,
-    Point,
+    Point, DivIcon,
 };
 use js_sys::Object;
 use wasm_bindgen::prelude::*;
@@ -26,6 +26,9 @@ extern "C" {
     // [`Marker`](https://leafletjs.com/reference.html#marker-l-marker)
     #[wasm_bindgen(constructor, js_namespace = L)]
     pub fn newWithOptions(lat_lng: &LatLng, options: &MarkerOptions) -> Marker;
+    
+    #[wasm_bindgen(method, js_name = setIcon)]
+    pub fn setDivIcon(this: &Marker, icon: &DivIcon) -> Marker;
 
     /// ['setIcon'](https://leafletjs.com/reference.html#marker-seticon)
     #[wasm_bindgen(method)]
